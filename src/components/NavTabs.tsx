@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 
 const NavTabs: React.FC = () => {
     return (
-        <Nav variant="tabs" className="flex-column flex-md-row" id="tab-list">
+        <Nav variant="tabs" className="flex-row">
             <Nav.Item>
                 <Nav.Link eventKey="newest-pane" as={Link} to="/newest">
                     <h6>Newest</h6>

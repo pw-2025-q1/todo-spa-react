@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { TodoItem } from '../model';
 
 interface InsertFormModalProps {
     show: boolean;
-    onHide: () => void;
-    onInsert: (item: TodoItem) => void; // Callback to notify parent of item insertion
+    onHide: () => void; // Callback to close the modal
+    onInsert: (item: TodoItem) => void; // Callback to notify parent of form submission
 }
 
 const InsertFormModal: React.FC<InsertFormModalProps> = ({ show, onHide, onInsert }) => {
-    const [formData, setFormData] = useState<TodoItem>({
-        id: 0,
-        description: '',
-        tags: [],
-        deadline: '',
-    });
-
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        onInsert(formData); // Notify parent with the new item
-        onHide(); // Close the modal
-    };
+        const formData = new FormData(event.currentTarget); // use the Form Data API
+        const description = formData.get('description') as string;
+        const tags = (formData.get('tags') as string)?.split(',').map((tag) => tag.trim()) || [];
+        const deadline = formData.get('deadline') as string;
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = event.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: name === 'tags' ? value.split(',').map((tag) => tag.trim()) : value,
-        }));
+        const newItem: TodoItem = {
+            id: 0, // Temporary ID
+            description,
+            tags,
+            deadline,
+        };
+
+        onInsert(newItem); // Notify parent with the new item
+        onHide(); // Close the modal
     };
 
     return (
@@ -43,8 +40,6 @@ const InsertFormModal: React.FC<InsertFormModalProps> = ({ show, onHide, onInser
                             name="description"
                             type="text"
                             placeholder="Describe your task"
-                            value={formData.description}
-                            onChange={handleChange}
                             required
                         />
                     </Form.Group>
@@ -54,18 +49,11 @@ const InsertFormModal: React.FC<InsertFormModalProps> = ({ show, onHide, onInser
                             name="tags"
                             type="text"
                             placeholder="tag1, tag2, tag3"
-                            value={formData.tags?.join(', ')}
-                            onChange={handleChange}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="deadline">
                         <Form.Label>Deadline</Form.Label>
-                        <Form.Control
-                            name="deadline"
-                            type="date"
-                            value={formData.deadline}
-                            onChange={handleChange}
-                        />
+                        <Form.Control name="deadline" type="date" />
                     </Form.Group>
                     <Button variant="secondary" type="submit">
                         Save

@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
         <footer className="pt-3 border-top">
             <Container>
                 <Row className="justify-content-center">
-                    <Col md={8}>
+                    <Col col={8}>
                         <address>
                             <h6>Contact us</h6>
                             <p>
@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
                             </p>
                         </address>
                     </Col>
-                    <Col md={4}>
+                    <Col col={4}>
                         <h6>Sitemap</h6>
                         <ul id="sitemap" className="list-unstyled">
                             <li><a href="#">Home</a></li>

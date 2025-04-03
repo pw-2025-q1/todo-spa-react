@@ -16,7 +16,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, isChecked, onCheck }) => {
     return (
         <ListGroup.Item>
             <Row>
-                <Col xs={10}>
+                <Col col={10}>
                     <Form.Check
                         type="checkbox"
                         label={
@@ -35,7 +35,7 @@ const ListItem: React.FC<ListItemProps> = ({ item, isChecked, onCheck }) => {
                         onChange={() => onCheck(item.id)} // Call onCheck with the item's ID, 
                     />
                 </Col>
-                <Col xs={2} className="d-flex justify-content-end align-items-center">
+                <Col col={2} className="d-flex justify-content-end align-items-center">
                     <span className="list-item-deadline">{formatDeadline(item.deadline)}</span>
                 </Col>
             </Row>

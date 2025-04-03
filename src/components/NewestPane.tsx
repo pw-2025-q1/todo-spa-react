@@ -1,12 +1,11 @@
 import React from 'react';
-import { Tab, ListGroup } from 'react-bootstrap';
-import ListItem from './ListItem';
+import ListPane from './ListPane';
 import { TodoItem } from '../model';
 
 interface NewestPaneProps {
     items: TodoItem[];
-    isChecked: (id: number) => boolean; 
-    onCheck: (id: number) => void; 
+    isChecked: (id: number) => boolean;
+    onCheck: (id: number) => void;
 }
 
 const NewestPane: React.FC<NewestPaneProps> = ({ items, isChecked, onCheck }) => {
@@ -16,21 +15,13 @@ const NewestPane: React.FC<NewestPaneProps> = ({ items, isChecked, onCheck }) =>
         return dateB - dateA; // Sort by descending deadline
     });
 
-    console.log('Rendering NewestPane');
-
     return (
-        <Tab.Pane eventKey="newest-pane" id="newest-pane">
-            <ListGroup id="newest-content" variant="flush">
-                {sortedItems.map((item) => (
-                    <ListItem
-                        key={item.id}
-                        item={item} // Pass the entire TodoItem object
-                        isChecked={isChecked(item.id)} // Pass the isChecked prop
-                        onCheck={onCheck} // Pass the onCheck callback
-                    />
-                ))}
-            </ListGroup>
-        </Tab.Pane>
+        <ListPane
+            eventKey="newest-pane"
+            items={sortedItems}
+            isChecked={isChecked}
+            onCheck={onCheck}
+        />
     );
 };
 
